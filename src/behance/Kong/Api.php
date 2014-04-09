@@ -26,9 +26,16 @@ class Api {
    */
   protected $_data_center;
 
+  /**
+   * The HTTP client.
+   *
+   * @var Guzzle\Http\Client description
+   */
+  protected $_client;
+
   public function __construct( Client $client = null ) {
 
-    $this->_setHttpClient( $http_client );
+    $this->_setHttpClient( $client );
 
   } // __construct
 

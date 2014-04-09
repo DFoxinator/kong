@@ -11,9 +11,11 @@ class Endpoints {
   /**
    * API Endpoints
    */
-  const LISTS                = 'lists/list.json';
-  const LIST_SUBSCRIBE       = 'lists/subscribe.json';
-  const LIST_BATCH_SUBSCRIBE = 'lists/batch-subscribe.json';
+  const LISTS                  = 'lists/list.json';
+  const LIST_SUBSCRIBE         = 'lists/subscribe.json';
+  const LIST_UNSUBSCRIBE       = 'lists/unsubscribe.json';
+  const LIST_BATCH_SUBSCRIBE   = 'lists/batch-subscribe.json';
+  const LIST_BATCH_UNSUBSCRIBE = 'lists/batch-unsubscribe.json';
 
   /**
    * Build an endpoint.

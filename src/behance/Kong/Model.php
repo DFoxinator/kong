@@ -21,8 +21,8 @@ class Model {
    */
   public function __construct( Api $api, array $data = [] ) {
 
-    $this->_api  = $api;
-    $this->_data = $data;
+    $this->setApi( $api );
+    $this->setData( $data );
 
   } // __construct
 
@@ -49,6 +49,18 @@ class Model {
     $this->_dirty[ $property ] = $value;
 
   } // __set
+
+  public function setData( array $data = [] ) {
+
+    $this->_data = $data;
+
+  } // setData
+
+  public function setApi( Api $api ) {
+
+    $this->_api  = $api;
+
+  } // setApi
 
   public function toArray() {
 
