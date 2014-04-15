@@ -1,7 +1,7 @@
 <?php
 
 use \behance\Kong\Endpoints;
-use \behance\Kong\MailingList;
+use \behance\Kong\Model\MailChimp\MailingList;
 
 class MailingListTest extends \PHPUnit_Framework_TestCase {
 
@@ -13,20 +13,10 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
   public function testSubscribe() {
 
     $email = 'dunphy@adobe.com';
-    $list = $this->_getMockMailingList( [ '_getApi' ] );
-
-    $api = $this->_getMockApi( [ 'execute' ] );
-
-    $api->expects( $this->once() )
-        ->method( 'execute' )
-        ->with( $this->callback( function( $subject ) {
-          return is_array( $subject );
-        } ), Endpoints::LIST_SUBSCRIBE, 'POST' )
-        ->will( $this->returnValue( true ) );
+    $list = $this->_getMockMailingList( [ '_execute' ] );
 
     $list->expects( $this->once() )
-         ->method( '_getApi' )
-         ->will( $this->returnValue( $api ) );
+         ->method( '_execute' );
 
     $list->subscribe( $email );
 
@@ -40,20 +30,14 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
   public function testUnsubscribe() {
 
     $email = 'dunphy@adobe.com';
-    $list = $this->_getMockMailingList( [ '_getApi' ] );
-
-    $api = $this->_getMockApi( [ 'execute' ] );
-
-    $api->expects( $this->once() )
-        ->method( 'execute' )
-        ->with( $this->callback( function( $subject ) {
-          return is_array( $subject );
-        } ), Endpoints::LIST_UNSUBSCRIBE, 'POST' )
-        ->will( $this->returnValue( true ) );
+    $list = $this->_getMockMailingList( [ '_execute' ] );
 
     $list->expects( $this->once() )
-         ->method( '_getApi' )
-         ->will( $this->returnValue( $api ) );
+         ->method( '_execute' )
+         ->with( $this->callback( function( $subject ) {
+           return is_array( $subject );
+         } ), Endpoints::LIST_UNSUBSCRIBE, 'POST' )
+         ->will( $this->returnValue( true ) );
 
     $list->unsubscribe( $email );
 
@@ -68,20 +52,14 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
 
     $users = [ [], [] ];
 
-    $list = $this->_getMockMailingList( [ '_getApi' ] );
+    $list = $this->_getMockMailingList( [ '_execute' ] );
 
-    $api = $this->_getMockApi( [ 'execute' ] );
-
-    $api->expects( $this->once() )
-        ->method( 'execute' )
+    $list->expects( $this->once() )
+        ->method( '_execute' )
         ->with( $this->callback( function( $subject ) use ( $users ) {
           return is_array( $subject ) && ( count( $subject['batch'] ) === count( $users ) );
         } ), Endpoints::LIST_BATCH_SUBSCRIBE, 'POST' )
         ->will( $this->returnValue( true ) );
-
-    $list->expects( $this->once() )
-         ->method( '_getApi' )
-         ->will( $this->returnValue( $api ) );
 
     $list->batchSubscribe( $users );
 
@@ -97,7 +75,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
 
     $users = range( 0, MailingList::MAX_BATCH_USERS );
 
-    $list = $this->_getMockMailingList( [ '_getApi' ] );
+    $list = $this->_getMockMailingList( [ '_execute' ] );
 
     $list->batchSubscribe( $users );
 
@@ -112,20 +90,14 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
 
     $users = [ [], [] ];
 
-    $list = $this->_getMockMailingList( [ '_getApi' ] );
-
-    $api = $this->_getMockApi( [ 'execute' ] );
-
-    $api->expects( $this->once() )
-        ->method( 'execute' )
-        ->with( $this->callback( function( $subject ) use ( $users ) {
-          return is_array( $subject ) && ( count( $subject['batch'] ) === count( $users ) );
-        } ), Endpoints::LIST_BATCH_UNSUBSCRIBE, 'POST' )
-        ->will( $this->returnValue( true ) );
+    $list = $this->_getMockMailingList( [ '_execute' ] );
 
     $list->expects( $this->once() )
-         ->method( '_getApi' )
-         ->will( $this->returnValue( $api ) );
+         ->method( '_execute' )
+         ->with( $this->callback( function( $subject ) use ( $users ) {
+           return is_array( $subject ) && ( count( $subject['batch'] ) === count( $users ) );
+         } ), Endpoints::LIST_BATCH_UNSUBSCRIBE, 'POST' )
+         ->will( $this->returnValue( true ) );
 
     $list->batchUnsubscribe( $users );
 
@@ -149,7 +121,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
 
   protected function _getMockMailingList( array $list_methods = [], array $api_methods = [] ) {
 
-    $list = $this->getMockBuilder( '\behance\Kong\MailingList' )
+    $list = $this->getMockBuilder( '\behance\Kong\Model\MailChimp\MailingList' )
                  ->disableOriginalConstructor()
                  ->setMethods( $list_methods )
                  ->getMock();
@@ -159,18 +131,5 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
     return $list;
 
   } // _getMockMailingList
-
-  protected function _getMockApi( array $methods = [] ) {
-
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
-                ->disableOriginalConstructor();
-
-    if ( !empty( $methods ) ) {
-        $api->setMethods( $methods );
-    }
-
-    return $api->getMock();
-
-  } // _getMockApi
 
 } // MailingListTest

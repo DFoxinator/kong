@@ -3,12 +3,6 @@
 class Endpoints {
 
   /**
-   * Base information
-   */
-  const API_URI     = 'api.mailchimp.com';
-  const API_VERSION = '2.0';
-
-  /**
    * API Endpoints
    */
   const LISTS                  = 'lists/list.json';
@@ -18,6 +12,12 @@ class Endpoints {
   const LIST_BATCH_UNSUBSCRIBE = 'lists/batch-unsubscribe.json';
 
   /**
+   * Mandrill API Endpoints
+   */
+  const MANDRILL_SEND          = 'messages/send.json';
+  const MANDRILL_SEND_TEMPLATE = 'messages/send-template.json';
+
+  /**
    * Build an endpoint.
    *
    * @param string $endpoint
@@ -25,11 +25,17 @@ class Endpoints {
    *
    * @return string
    */
-  public static function build( $endpoint, $data_center ) {
+  public static function build( $endpoint, $uri, $version, $data_center = null ) {
 
-    return $data_center . '.' . implode( '/', [
-        static::API_URI,
-        static::API_VERSION,
+    $protocol = 'https://';
+
+    if ( !empty( $data_center ) ) {
+      $protocol .= '.' . $data_center;
+    }
+
+    return $protocol . implode( '/', [
+        $uri,
+        $version,
         $endpoint,
     ] );
 

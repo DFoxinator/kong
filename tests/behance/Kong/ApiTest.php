@@ -35,7 +35,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
         ->method( '_getHttpClient' )
         ->will( $this->returnValue( $http ) );
 
-    $api->execute( [], '' );
+    $api->execute( [], '', '', '', '' );
 
   } // testExecute
 

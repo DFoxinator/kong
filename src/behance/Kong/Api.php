@@ -1,7 +1,7 @@
 <?php namespace behance\Kong;
 
 use \behance\Kong;
-use \Guzzle\Http\Client;
+use \Guzzle\Http\Client as HttpClient;
 
 class Api {
 
@@ -33,7 +33,7 @@ class Api {
    */
   protected $_client;
 
-  public function __construct( Client $client = null ) {
+  public function __construct( HttpClient $client = null ) {
 
     $this->_setHttpClient( $client );
 
@@ -46,14 +46,14 @@ class Api {
    * @param string $endpoint
    * @param string $method which HTTP method to call
    *
-   * @return array an array of class $model
+   * @return \Guzzle\Http\Message\Response;
    */
-  public function execute( $params, $endpoint, $method = 'GET' ) {
+  public function execute( array $params, $endpoint, $uri, $version, $method = 'GET' ) {
 
-    $options  = [];
+    $options  = [ 'exceptions' => false ];
     $body     = null;
     $headers  = null;
-    $endpoint = 'https://' . $this->_constructEndpoint( $endpoint );
+    $endpoint = $this->_constructEndpoint( $endpoint, $uri, $version );
     $query    = $this->_constructQuery( $params );
 
     $index = ( $method === 'GET' )
@@ -105,7 +105,7 @@ class Api {
    *
    * @param \Guzzle\Http\Client $client
    */
-  protected function _setHttpClient( Client $client = null ) {
+  protected function _setHttpClient( HttpClient $client = null ) {
 
     $this->_http = $client;
 
@@ -119,7 +119,7 @@ class Api {
   protected function _getHttpClient() {
 
     if ( !$this->_client ) {
-      $this->_setHttpClient( new Client );
+      $this->_setHttpClient( new HttpClient );
     }
 
     return $this->_http;
@@ -136,7 +136,15 @@ class Api {
    */
   protected function _constructQuery( array $params = [] ) {
 
-    return array_merge( [ 'apikey' => $this->_key ], $params );
+    // This helps make the distinction between MailChimp and Mandrill
+    // API calls. MailChimp uses _data_center while Mandrill doesn't.
+    // Unfortunately, they use different array keys to describe the
+    // API key during calls.
+    $api_key_index = ( is_null( $this->_data_center ) )
+                     ? 'key'
+                     : 'apikey';
+
+    return array_merge( [ $api_key_index => $this->_key ], $params );
 
   } // _constructQuery
 
@@ -147,9 +155,9 @@ class Api {
    *
    * @return string
    */
-  protected function _constructEndpoint( $endpoint ) {
+  protected function _constructEndpoint( $endpoint, $uri, $version ) {
 
-    return Endpoints::build( $endpoint, $this->_data_center );
+    return Endpoints::build( $endpoint, $uri, $version, $this->_data_center );
 
   } // _constructEndpoint
 
@@ -160,7 +168,9 @@ class Api {
 
     $parts = explode( '-', $this->_key );
 
-    $this->_data_center = array_pop( $parts );
+    if ( count( $parts ) > 1 ) {
+      $this->_data_center = array_pop( $parts );
+    }
 
   } // _setDataCenter
 

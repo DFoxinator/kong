@@ -1,6 +1,7 @@
-<?php namespace behance\Kong;
+<?php namespace behance\Kong\Model\MailChimp;
 
 use \behance\Kong\Model;
+use \behance\Kong\Endpoints;
 use \behance\Kong\Exception\MaximumExceededException;
 
 class MailingList extends Model {
@@ -30,7 +31,7 @@ class MailingList extends Model {
         'double_optin' => false,
     ];
 
-    $this->_getApi()->execute( $params, Endpoints::LIST_SUBSCRIBE, 'POST' );
+    $this->_execute( $params, Endpoints::LIST_SUBSCRIBE, 'POST' );
 
   } // subscribe
 
@@ -56,7 +57,7 @@ class MailingList extends Model {
 
     $params = array_merge( $params, $options );
 
-    $this->_getApi()->execute( $params, Endpoints::LIST_BATCH_SUBSCRIBE, 'POST' );
+    $this->_execute( $params, Endpoints::LIST_BATCH_SUBSCRIBE, 'POST' );
 
   } // batchSubscribe
 
@@ -80,7 +81,7 @@ class MailingList extends Model {
         'notify'        => $notify,
     ];
 
-    $this->_getApi()->execute( $params, Endpoints::LIST_UNSUBSCRIBE, 'POST' );
+    return $this->_execute( $params, Endpoints::LIST_UNSUBSCRIBE, 'POST' );
 
   } // unsubscribe
 
@@ -109,7 +110,7 @@ class MailingList extends Model {
         'notify'        => $notify,
     ];
 
-    $this->_getApi()->execute( $params, Endpoints::LIST_BATCH_UNSUBSCRIBE, 'POST' );
+    return $this->_execute( $params, Endpoints::LIST_BATCH_UNSUBSCRIBE, 'POST' );
 
   } // batchUnsubscribe
 
