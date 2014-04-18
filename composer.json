@@ -1,0 +1,24 @@
+{
+  "name": "behance/kong",
+  "description": "PHP 5.4+ PSR-1 compliant wrapper for the MailChimp API.",
+  "keywords": ["mailchimp", "email"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mark Dunphy",
+      "email": "dunphy@adobe.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "guzzle/guzzle": "3.8.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "behance": "src/"
+    }
+  }
+}

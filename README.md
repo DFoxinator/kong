@@ -1,4 +1,5 @@
-kong
-====
+#Kong
+---
+*The MailChimp API wrapper to rule them all.*
 
-Mailchimp Wrapper
+Documentation coming to a README near you soon.
