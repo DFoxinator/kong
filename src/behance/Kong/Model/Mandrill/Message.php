@@ -3,6 +3,7 @@
 use \behance\Kong\Model;
 use \behance\Kong\Endpoints;
 use \behance\Kong\Exception\InvalidTypeException;
+use \Guzzle\Http\Message\Response;
 
 class Message extends Model {
 
@@ -12,6 +13,13 @@ class Message extends Model {
    * @var array
    */
   protected static $_RECIPIENT_TYPES = [ 'to', 'cc', 'bcc' ];
+
+  /**
+   * Client string.
+   *
+   * @var string
+   */
+  protected $_client_string = 'Mandrill';
 
   /**
    * The sender's email
@@ -94,8 +102,6 @@ class Message extends Model {
 
     $this->_template_name = $name;
 
-    return $this;
-
   } // setTemplate
 
   /**
@@ -124,8 +130,6 @@ class Message extends Model {
     $this->_from_email = $email;
     $this->_from_name  = $name;
 
-    return $this;
-
   } // setFrom
 
   /**
@@ -141,8 +145,6 @@ class Message extends Model {
   public function setRecipients( array $recipients = [] ) {
 
     $this->_recipients = $recipients;
-
-    return $this;
 
   } // setRecipients
 
@@ -172,8 +174,6 @@ class Message extends Model {
       $this->addMergeVars( $email, $merge_vars, false );
     }
 
-    return $this;
-
   } // addRecipient
 
   /**
@@ -187,7 +187,7 @@ class Message extends Model {
    */
   public function addMergeVars( $email, array $merge_vars, $validate = true ) {
 
-    if ( $validate && !$this->hasRecipient( $email ) ) {
+    if ( $validate === true && $this->hasRecipient( $email ) ) {
       return false;
     }
 
@@ -197,8 +197,6 @@ class Message extends Model {
         'rcpt' => $email,
         'vars' => $this->_formatMergeVars( $vars ),
     ];
-
-    return $this;
 
   } // addMergeVars
 
@@ -212,8 +210,6 @@ class Message extends Model {
   public function setSubject( $subject ) {
 
     $this->_subject = $subject;
-
-    return $this;
 
   } // setSubject
 
@@ -237,6 +233,24 @@ class Message extends Model {
   } // hasRecipient
 
   /**
+   * @return array
+   */
+  public function getRecipients() {
+
+    return $this->_recipients;
+
+  } // getRecipients
+
+  /**
+   * @return array
+   */
+  public function getMergeVars() {
+
+    return $this->_merge_vars;
+
+  } // getMergeVars
+
+  /**
    * Send a transactional email using a hosted template.
    *
    * @param array $params
@@ -249,7 +263,7 @@ class Message extends Model {
     $params['template_content'] = $this->_template_content;
 
     $response = $this->_execute( $params, Endpoints::MANDRILL_SEND_TEMPLATE, 'POST' );
-    die( var_dump( $response->json() ) );
+
     return $this->_formatResponse( $response );
 
   } // _sendTemplate
@@ -328,5 +342,20 @@ class Message extends Model {
     return $flattened;
 
   } // _flatten
+
+    /**
+   * Format the raw API response into an array of Models.
+   *
+   * @param Guzzle\Http\Message\Response $response api response
+   *
+   * @return array
+   */
+  protected function _formatResponse( Response $response ) {
+
+    $body = $response->json();
+
+    return $body;
+
+  } // _formatResponse
 
 } // Message

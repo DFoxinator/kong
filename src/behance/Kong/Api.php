@@ -26,13 +26,6 @@ class Api {
    */
   protected $_data_center;
 
-  /**
-   * The HTTP client.
-   *
-   * @var Guzzle\Http\Client description
-   */
-  protected $_client;
-
   public function __construct( HttpClient $client = null ) {
 
     $this->_setHttpClient( $client );
@@ -77,11 +70,7 @@ class Api {
    *
    * @param string $key
    */
-  public function setApiKey( $key = null ) {
-
-    if ( is_null( $key ) ) {
-      return;
-    }
+  public function setApiKey( $key ) {
 
     $this->_key = $key;
     $this->_setDataCenter();
@@ -112,15 +101,11 @@ class Api {
   } // _setHttpClient
 
   /**
-   * Retrieve/lazily-create an http client.
+   * Retrieve the http client.
    *
    * @return \Guzzle\Http\Client
    */
   protected function _getHttpClient() {
-
-    if ( !$this->_client ) {
-      $this->_setHttpClient( new HttpClient );
-    }
 
     return $this->_http;
 
@@ -157,7 +142,7 @@ class Api {
    */
   protected function _constructEndpoint( $endpoint, $uri, $version ) {
 
-    return Endpoints::build( $endpoint, $uri, $version, $this->_data_center );
+    return Endpoints::build( $endpoint, $uri, $version, $this->getDataCenter() );
 
   } // _constructEndpoint
 

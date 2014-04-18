@@ -7,10 +7,7 @@ use \behance\Kong\Endpoints;
 use \behance\Kong\Model;
 use \Guzzle\Http\Message\Response;
 
-class Kong extends \behance\Kong\Client {
-
-  const API_URI     = 'api.mailchimp.com';
-  const API_VERSION = '2.0';
+class Kong {
 
   /**
    * Mandrill client for transactional sends.
@@ -26,6 +23,13 @@ class Kong extends \behance\Kong\Client {
    */
   protected $_mailchimp;
 
+  /**
+   * Retrieve the MailChimp client.
+   *
+   * @param string $key The MailChimp API key to use.
+   *
+   * @return \behance\Kong\MailChimp
+   */
   public function getMailChimp( $key = null ) {
 
     if ( is_null( $this->_mailchimp ) ) {
@@ -65,16 +69,14 @@ class Kong extends \behance\Kong\Client {
   } // setMandrill
 
   /**
-   * Throw the appropriate exception based on the given errors.
+   * Set the MailChimp client.
    *
-   * Not yet implemented.
-   *
-   * @param Guzzle\Http\Message\Response $response
-   * @param array $errors
+   * @param \behance\Kong\MailChimp $mailchimp
    */
-  protected function _handleErrors( Response $response, array $errors ) {
+  public function setMailchimp( MailChimp $mailchimp ) {
 
+    $this->_mailchimp = $mailchimp;
 
-  } // _handleErrors
+  } // setMailchimp
 
 } // Kong

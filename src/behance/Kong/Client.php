@@ -23,16 +23,6 @@ class Client {
 
   } // __construct
 
-  public function __get( $property ) {
-
-    if ( isset( $this->$property ) ) {
-      return $this->$property;
-    }
-
-    return null;
-
-  } // __get
-
   /**
    * Get the API object.
    *
@@ -41,7 +31,7 @@ class Client {
   public function getApi() {
 
     if ( is_null( $this->_api ) ) {
-      $this->setApi( new Api );
+      $this->setApi( new Api( new \Guzzle\Http\Client ) );
     }
 
     return $this->_api;
@@ -92,18 +82,14 @@ class Client {
   /**
    * Format the raw API response into an array of Models.
    *
-   * @param Guzzle\Http\Message\Request $response api response
+   * @param Guzzle\Http\Message\Response $response api response
    * @param string $model the name of the class to instantiate
    *
    * @return array
    */
-  protected function _formatResponse( Response $response, $model = null ) {
+  protected function _formatResponse( Response $response, $model ) {
 
     $body = $response->json();
-
-    if ( is_null( $model ) ) {
-      return $body;
-    }
 
     $collection = [];
     $client = Model::getClientString( $model );

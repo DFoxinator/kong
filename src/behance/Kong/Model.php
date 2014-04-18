@@ -38,8 +38,20 @@ class Model {
       self::MANDRILL_MESSAGE,
   ];
 
+  /**
+   * This must be implemented an all models extending this class.
+   * It is the class name of the \behance\Kong\Client pertaining to the model.
+   *
+   * @var string either MailChimp or Mandrill
+   */
+  protected $_client_string;
+
+  /**
+   * The data for the model.
+   *
+   * @var array
+   */
   protected $_data  = [];
-  protected $_dirty = [];
 
   /**
    * HTTP object for cURL requests.
@@ -61,10 +73,6 @@ class Model {
 
   public function __get( $property ) {
 
-    if ( isset( $this->_dirty[ $property ] ) ) {
-      return $this->_dirty[ $property ];
-    }
-
     if ( isset( $this->_data[ $property ] ) ) {
       return $this->_data[ $property ];
     }
@@ -72,16 +80,6 @@ class Model {
     throw new PropertyNotFoundException( 'Could not find property ' . $property . ' in class ' . get_class( $this ) );
 
   } // __get
-
-  public function __set( $property, $value ) {
-
-    if ( !isset( $this->_data[ $property ] ) ) {
-      throw new PropertyNotFoundException( 'Can not set non-existent property ' . $property . ' in class ' . get_class( $this ) );
-    }
-
-    $this->_dirty[ $property ] = $value;
-
-  } // __set
 
   public function setData( array $data = [] ) {
 
@@ -97,7 +95,7 @@ class Model {
 
   public function toArray() {
 
-    return array_merge( $this->_data, $this->_dirty );
+    return $this->_data;
 
   } // toArray
 
@@ -141,12 +139,7 @@ class Model {
    */
   protected function _execute( array $params, $endpoint, $method ) {
 
-    $model = get_class( $this );
-    $parts = explode( '\\', $model );
-
-    $client_string = static::getClientString( array_pop( $parts ) );
-
-    $client = "\behance\Kong\\$client_string";
+    $client = "\behance\Kong\\{$this->_client_string}";
 
     return $this->_getApi()->execute( $params, $endpoint, $client::API_URI, $client::API_VERSION, $method );
 

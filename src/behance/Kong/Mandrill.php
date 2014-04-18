@@ -18,29 +18,4 @@ class Mandrill extends \behance\Kong\Client {
 
   } // message
 
-  /**
-   * Send a transactional email to a single user.
-   *
-   * @param string $email
-   */
-  public function send() {
-
-    $params = [
-        'message' => [
-            'text' => 'Hello world',
-            'subject' => 'Test subject',
-            'from_name' => 'King Kong',
-            'from_email' => 'dunphy@adobe.com',
-            'to' => [
-                [ 'email' => 'markdunphy@gmail.com', 'name' => 'Mark Dunphy' ]
-            ],
-        ],
-    ];
-
-    $response = $this->_execute( $params, Endpoints::MANDRILL_SEND );
-
-    return $this->_formatResponse( $response );
-
-  } // send
-
 } // Mandrill

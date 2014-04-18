@@ -30,7 +30,7 @@ class Endpoints {
     $protocol = 'https://';
 
     if ( !empty( $data_center ) ) {
-      $protocol .= '.' . $data_center;
+      $protocol .= $data_center . '.';
     }
 
     return $protocol . implode( '/', [

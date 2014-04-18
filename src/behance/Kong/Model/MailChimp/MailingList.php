@@ -15,6 +15,13 @@ class MailingList extends Model {
   const MAX_BATCH_USERS = 10000;
 
   /**
+   * Client string.
+   *
+   * @var string
+   */
+  protected $_client_string = 'MailChimp';
+
+  /**
    * Subscribe a user with the provided profile
    * data.
    *
