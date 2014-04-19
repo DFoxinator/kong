@@ -81,6 +81,10 @@ class Message extends Model {
       $params['message']['merge_vars'] = $this->_merge_vars;
     }
 
+    if ( !empty( $this->_global_merge_vars ) ) {
+      $params['message']['global_merge_vars'] = $this->_global_merge_vars;
+    }
+
     if ( !empty( $this->_template_name ) ) {
       return $this->_sendTemplate( $params );
     }
@@ -249,6 +253,12 @@ class Message extends Model {
     return $this->_merge_vars;
 
   } // getMergeVars
+
+  public function setGlobalMergeVars( array $vars = [] ) {
+
+    $this->_global_merge_vars = $this->_formatMergeVars( $this->_flatten( $vars ) );
+
+  } // setGlobalMergeVars
 
   /**
    * Send a transactional email using a hosted template.

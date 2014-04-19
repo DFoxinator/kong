@@ -242,6 +242,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
         ],
     ];
 
+    $expected_global_vars = [
+        [ 'name' => 'hello', 'content' => 'world' ],
+    ];
+
     $expected_params = [
         'message' => [
             'subject'    => $subject,
@@ -250,6 +254,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
             'to'         => array_values( $merged ),
             'merge'      => true,
             'merge_vars' => [ $expected_vars ],
+            'global_merge_vars' => $expected_global_vars,
         ],
     ];
 
@@ -272,6 +277,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $message->setFrom( $from_email, $from_name );
     $message->setRecipients( $multiple_recipients );
     $message->addRecipient( $single_recipient['email'], $single_recipient['name'], $vars );
+    $message->setGlobalMergeVars( $vars );
 
     $message->send();
 
