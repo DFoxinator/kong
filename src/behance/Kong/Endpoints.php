@@ -1,4 +1,4 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
 class Endpoints {
 

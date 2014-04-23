@@ -1,8 +1,8 @@
-<?php namespace behance\Kong\Model\MailChimp;
+<?php namespace Behance\Kong\Model\MailChimp;
 
-use \behance\Kong\Model;
-use \behance\Kong\Endpoints;
-use \behance\Kong\Exception\MaximumExceededException;
+use \Behance\Kong\Model;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\Exception\MaximumExceededException;
 
 class MailingList extends Model {
 

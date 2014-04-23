@@ -1,8 +1,8 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-use \behance\Kong\Api;
-use \behance\Kong\Exception\PropertyNotFoundException;
-use \behance\Kong\Exception\InvalidModelException;
+use \Behance\Kong\Api;
+use \Behance\Kong\Exception\PropertyNotFoundException;
+use \Behance\Kong\Exception\InvalidModelException;
 
 class Model {
 
@@ -40,7 +40,7 @@ class Model {
 
   /**
    * This must be implemented an all models extending this class.
-   * It is the class name of the \behance\Kong\Client pertaining to the model.
+   * It is the class name of the \Behance\Kong\Client pertaining to the model.
    *
    * @var string either MailChimp or Mandrill
    */
@@ -61,7 +61,7 @@ class Model {
   protected $_api;
 
   /**
-   * @param behance\Kong\Api $api
+   * @param \Behance\Kong\Api $api
    * @param array $data data to hydrate the model with
    */
   public function __construct( Api $api, array $data = [] ) {
@@ -139,7 +139,7 @@ class Model {
    */
   protected function _execute( array $params, $endpoint, $method ) {
 
-    $client = "\behance\Kong\\{$this->_client_string}";
+    $client = "\Behance\Kong\\{$this->_client_string}";
 
     return $this->_getApi()->execute( $params, $endpoint, $client::API_URI, $client::API_VERSION, $method );
 

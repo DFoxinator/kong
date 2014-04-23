@@ -20,7 +20,7 @@
 
     <filter>
         <whitelist>
-            <directory suffix=".php">./src/behance</directory>
+            <directory suffix=".php">./src/Behance</directory>
         </whitelist>
     </filter>
 

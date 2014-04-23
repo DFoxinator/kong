@@ -1,7 +1,7 @@
 <?php
 
-use \behance\Kong;
-use \behance\Kong\Endpoints;
+use \Behance\Kong;
+use \Behance\Kong\Endpoints;
 
 class MessageTest extends \PHPUnit_Framework_TestCase {
 
@@ -10,7 +10,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $email = uniqid();
     $vars  = [];
 
-    $message = $this->getMockBuilder( '\behance\Kong\Model\Mandrill\Message' )
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
                     ->disableOriginalConstructor()
                     ->setMethods( [ 'hasRecipient' ] )
                     ->getMock();
@@ -41,7 +41,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
         'array_1_and' => 'stuff',
     ];
 
-    $message = $this->getMockBuilder( '\behance\Kong\Model\Mandrill\Message' )
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
                     ->disableOriginalConstructor()
                     ->setMethods( [ 'hasRecipient' ] )
                     ->getMock();
@@ -75,7 +75,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $name  = uniqid();
     $vars  = [ 'hello' => 'world' ];
 
-    $message = $this->getMockBuilder( '\behance\Kong\Model\Mandrill\Message' )
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
                     ->disableOriginalConstructor()
                     ->setMethods( [ 'addMergeVars' ] )
                     ->getMock();
@@ -90,7 +90,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
   public function testAddRecipientWithoutMergeVars() {
 
-    $message = $this->getMockBuilder( '\behance\Kong\Model\Mandrill\Message' )
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
                     ->disableOriginalConstructor()
                     ->setMethods( [ 'addMergeVars' ] )
                     ->getMock();
@@ -114,7 +114,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
   } // testAddRecipientWithoutMergeVars
 
   /**
-   * @expectedException \behance\Kong\Exception\InvalidTypeException
+   * @expectedException \Behance\Kong\Exception\InvalidTypeException
    */
   public function testAddRecipientException() {
 
@@ -183,7 +183,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
     $response = $this->_getMockResponse();
 
-    $message = $this->getMockBuilder( '\behance\Kong\Model\Mandrill\Message' )
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
                     ->disableOriginalConstructor()
                     ->setMethods( [ '_execute', '_formatResponse' ] )
                     ->getMock();
@@ -242,6 +242,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
         ],
     ];
 
+    $expected_global_vars = [
+        [ 'name' => 'hello', 'content' => 'world' ],
+    ];
+
     $expected_params = [
         'message' => [
             'subject'    => $subject,
@@ -250,12 +254,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
             'to'         => array_values( $merged ),
             'merge'      => true,
             'merge_vars' => [ $expected_vars ],
+            'global_merge_vars' => $expected_global_vars,
         ],
     ];
 
     $response = $this->_getMockResponse();
 
-    $message = $this->getMockBuilder( '\behance\Kong\Model\Mandrill\Message' )
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
                     ->disableOriginalConstructor()
                     ->setMethods( [ '_execute', '_sendTemplate' ] )
                     ->getMock();
@@ -272,6 +277,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $message->setFrom( $from_email, $from_name );
     $message->setRecipients( $multiple_recipients );
     $message->addRecipient( $single_recipient['email'], $single_recipient['name'], $vars );
+    $message->setGlobalMergeVars( $vars );
 
     $message->send();
 

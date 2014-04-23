@@ -1,7 +1,7 @@
 <?php
 
-use \behance\Kong\Model;
-use \behance\Kong\Endpoints;
+use \Behance\Kong\Model;
+use \Behance\Kong\Endpoints;
 
 class MailChimpTest extends \PHPUnit_Framework_TestCase {
 
@@ -10,7 +10,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
     $response = $this->_getMockResponse( [ [], [], [] ], [] );
     $api = $this->_getMockApi();
 
-    $kong = $this->getMockBuilder( 'behance\Kong\MailChimp' )
+    $kong = $this->getMockBuilder( 'Behance\Kong\MailChimp' )
                  ->disableOriginalConstructor()
                  ->setMethods( [ 'getApi' ] )
                  ->getMock();
@@ -33,7 +33,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
     $response = $this->_getMockResponse( [ [], [], [] ], [] );
     $api = $this->_getMockApi();
 
-    $kong = $this->getMockBuilder( 'behance\Kong\MailChimp' )
+    $kong = $this->getMockBuilder( 'Behance\Kong\MailChimp' )
                  ->disableOriginalConstructor()
                  ->setMethods( [ 'getApi', '_formatResponse' ] )
                  ->getMock();
@@ -63,7 +63,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
     $response = $this->_getMockResponse( [ [], [], [] ], [] );
     $api = $this->_getMockApi();
 
-    $kong = $this->getMockBuilder( 'behance\Kong\MailChimp' )
+    $kong = $this->getMockBuilder( 'Behance\Kong\MailChimp' )
                  ->disableOriginalConstructor()
                  ->setMethods( [ 'getApi' ] )
                  ->getMock();
@@ -81,7 +81,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
     $this->assertInternalType( 'array', $lists );
 
     foreach ( $lists as $list ) {
-      $this->assertInstanceOf( '\behance\Kong\Model\MailChimp\MailingList', $list );
+      $this->assertInstanceOf( '\Behance\Kong\Model\MailChimp\MailingList', $list );
     }
 
   } // testGetListsSuccessful
@@ -91,7 +91,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
     $response = $this->_getMockResponse( [], [] );
     $api = $this->_getMockApi();
 
-    $kong = $this->getMockBuilder( 'behance\Kong\MailChimp' )
+    $kong = $this->getMockBuilder( 'Behance\Kong\MailChimp' )
                  ->disableOriginalConstructor()
                  ->setMethods( [ 'getApi' ] )
                  ->getMock();
@@ -110,7 +110,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
 
   protected function _getMockApi() {
 
-    return $this->getMockBuilder( 'behance\Kong\Api' )
+    return $this->getMockBuilder( 'Behance\Kong\Api' )
                 ->disableOriginalConstructor()
                 ->setMethods( [ 'execute' ] )
                 ->getMock();

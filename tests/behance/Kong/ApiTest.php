@@ -1,8 +1,8 @@
 <?php
 
-use \behance\Kong\Api;
-use \behance\Kong\Endpoints;
-use \behance\Kong\MailChimp;
+use \Behance\Kong\Api;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\MailChimp;
 
 class ApiTest extends \PHPUnit_Framework_TestCase {
 
@@ -55,7 +55,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
                 ->with( $method, $expected_full_endpoint, $headers, $body, $expected_options )
                 ->will( $this->returnValue( $request ) );
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
                 ->setConstructorArgs( [ $http_client ] )
                 ->setMethods( [ 'getDataCenter' ] )
                 ->getMock();
@@ -102,7 +102,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
                 ->with( $method, $expected_full_endpoint, $headers, $expected_body, $expected_options )
                 ->will( $this->returnValue( $request ) );
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
                 ->setConstructorArgs( [ $http_client ] )
                 ->setMethods( [ 'getDataCenter' ] )
                 ->getMock();

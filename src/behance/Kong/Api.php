@@ -1,6 +1,6 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-use \behance\Kong;
+use \Behance\Kong;
 use \Guzzle\Http\Client as HttpClient;
 
 class Api {
@@ -136,7 +136,7 @@ class Api {
   /**
    * Construct and endpoint to hit on the API.
    *
-   * @param string $endpoint a constant from \behance\Kong\Endpoints
+   * @param string $endpoint a constant from \Behance\Kong\Endpoints
    *
    * @return string
    */

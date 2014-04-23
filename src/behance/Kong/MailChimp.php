@@ -1,6 +1,6 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-class MailChimp extends \behance\Kong\Client {
+class MailChimp extends \Behance\Kong\Client {
 
   const API_URI = 'api.mailchimp.com';
   const API_VERSION = 'v2';
@@ -10,7 +10,7 @@ class MailChimp extends \behance\Kong\Client {
    *
    * @param string $id the list id
    *
-   * @return \behance\Kong\Model\MailChimp\MailingList|boolean
+   * @return \Behance\Kong\Model\MailChimp\MailingList|boolean
    */
   public function getList( $id ) {
 
@@ -36,7 +36,7 @@ class MailChimp extends \behance\Kong\Client {
    *
    * @param array $params
    *
-   * @return array an array of \behance\Kong\Model\MailChimp\MailingList
+   * @return array an array of \Behance\Kong\Model\MailChimp\MailingList
    */
   public function getLists( array $params = [] ) {
 

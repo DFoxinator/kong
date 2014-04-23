@@ -1,8 +1,8 @@
-<?php namespace behance\Kong\Model\Mandrill;
+<?php namespace Behance\Kong\Model\Mandrill;
 
-use \behance\Kong\Model;
-use \behance\Kong\Endpoints;
-use \behance\Kong\Exception\InvalidTypeException;
+use \Behance\Kong\Model;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\Exception\InvalidTypeException;
 use \Guzzle\Http\Message\Response;
 
 class Message extends Model {
@@ -63,6 +63,13 @@ class Message extends Model {
   protected $_subject;
 
   /**
+   * Specialized email headers.
+   *
+   * @var array key/value pairs
+   */
+  protected $_headers;
+
+  /**
    * Send this message.
    */
   public function send() {
@@ -81,6 +88,10 @@ class Message extends Model {
       $params['message']['merge_vars'] = $this->_merge_vars;
     }
 
+    if ( !empty( $this->_global_merge_vars ) ) {
+      $params['message']['global_merge_vars'] = $this->_global_merge_vars;
+    }
+
     if ( !empty( $this->_template_name ) ) {
       return $this->_sendTemplate( $params );
     }
@@ -96,7 +107,7 @@ class Message extends Model {
    *
    * @param string $name
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function setTemplate( $name ) {
 
@@ -109,7 +120,7 @@ class Message extends Model {
    *
    * @param array $content
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function setTemplateContent( array $content ) {
 
@@ -123,7 +134,7 @@ class Message extends Model {
    * @param string $email
    * @param string $name
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function setFrom( $email = null, $name = null ) {
 
@@ -140,7 +151,7 @@ class Message extends Model {
    *
    * @param array $recipients
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function setRecipients( array $recipients = [] ) {
 
@@ -156,7 +167,7 @@ class Message extends Model {
    * @param array  $merge_vars
    * @param string $type
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function addRecipient( $email, $name = null, array $merge_vars = [], $type = 'to' ) {
 
@@ -183,7 +194,7 @@ class Message extends Model {
    * @param array   $merge_vars key value pairs of merge vars
    * @param boolean $validate whether or not to validate the $email exists as a recipient
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function addMergeVars( $email, array $merge_vars, $validate = true ) {
 
@@ -205,7 +216,7 @@ class Message extends Model {
    *
    * @param string $subject
    *
-   * @return \behance\Kong\Model\Mandrill\Message
+   * @return \Behance\Kong\Model\Mandrill\Message
    */
   public function setSubject( $subject ) {
 
@@ -249,6 +260,23 @@ class Message extends Model {
     return $this->_merge_vars;
 
   } // getMergeVars
+
+  /**
+   * Set the email headers.
+   *
+   * @param array $headers
+   */
+  public function setHeaders( array $headers ) {
+
+    $this->_headers = $headers;
+
+  } // setHeaders
+
+  public function setGlobalMergeVars( array $vars = [] ) {
+
+    $this->_global_merge_vars = $this->_formatMergeVars( $this->_flatten( $vars ) );
+
+  } // setGlobalMergeVars
 
   /**
    * Send a transactional email using a hosted template.

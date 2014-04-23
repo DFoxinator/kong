@@ -1,10 +1,10 @@
-<?php namespace behance;
+<?php namespace Behance;
 
-use \behance\Kong\Api;
-use \behance\Kong\Mandrill;
-use \behance\Kong\MailChimp;
-use \behance\Kong\Endpoints;
-use \behance\Kong\Model;
+use \Behance\Kong\Api;
+use \Behance\Kong\Mandrill;
+use \Behance\Kong\MailChimp;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\Model;
 use \Guzzle\Http\Message\Response;
 
 class Kong {
@@ -12,14 +12,14 @@ class Kong {
   /**
    * Mandrill client for transactional sends.
    *
-   * @var behance\Kong\Mandrill
+   * @var Behance\Kong\Mandrill
    */
   protected $_mandrill;
 
   /**
    * MailChimp client.
    *
-   * @var behance\Kong\MailChimp
+   * @var Behance\Kong\MailChimp
    */
   protected $_mailchimp;
 
@@ -28,7 +28,7 @@ class Kong {
    *
    * @param string $key The MailChimp API key to use.
    *
-   * @return \behance\Kong\MailChimp
+   * @return \Behance\Kong\MailChimp
    */
   public function getMailChimp( $key = null ) {
 
@@ -45,7 +45,7 @@ class Kong {
    *
    * @param string $key The Mandrill API key to use.
    *
-   * @return \behance\Kong\Mandrill
+   * @return \Behance\Kong\Mandrill
    */
   public function getMandrill( $key = null ) {
 
@@ -60,7 +60,7 @@ class Kong {
   /**
    * Set the Mandrill client.
    *
-   * @param \behance\Kong\Mandrill $mandrill
+   * @param \Behance\Kong\Mandrill $mandrill
    */
   public function setMandrill( Mandrill $mandrill ) {
 
@@ -71,7 +71,7 @@ class Kong {
   /**
    * Set the MailChimp client.
    *
-   * @param \behance\Kong\MailChimp $mailchimp
+   * @param \Behance\Kong\MailChimp $mailchimp
    */
   public function setMailchimp( MailChimp $mailchimp ) {
 
