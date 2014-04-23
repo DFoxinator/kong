@@ -1,6 +1,6 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-use \behance\Kong\Endpoints;
+use \Behance\Kong\Endpoints;
 
 class Mandrill extends \behance\Kong\Client {
 

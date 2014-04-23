@@ -1,8 +1,8 @@
 <?php
 
-use \behance\Kong\Endpoints;
-use \behance\Kong\MailChimp;
-use \behance\Kong\Model\MailChimp\MailingList;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\MailChimp;
+use \Behance\Kong\Model\MailChimp\MailingList;
 
 class MailingListTest extends \PHPUnit_Framework_TestCase {
 

@@ -1,7 +1,7 @@
 <?php
 
-use \behance\Kong;
-use \behance\Kong\Endpoints;
+use \Behance\Kong;
+use \Behance\Kong\Endpoints;
 
 class MessageTest extends \PHPUnit_Framework_TestCase {
 

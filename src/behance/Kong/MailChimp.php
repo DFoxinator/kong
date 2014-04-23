@@ -1,4 +1,4 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
 class MailChimp extends \behance\Kong\Client {
 

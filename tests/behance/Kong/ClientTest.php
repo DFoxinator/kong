@@ -1,6 +1,6 @@
 <?php
 
-use \behance\Kong\Client;
+use \Behance\Kong\Client;
 
 class ClientTest extends \PHPUnit_Framework_TestCase {
 

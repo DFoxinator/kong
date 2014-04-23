@@ -1,6 +1,6 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-use \behance\Kong;
+use \Behance\Kong;
 use \Guzzle\Http\Client as HttpClient;
 
 class Api {

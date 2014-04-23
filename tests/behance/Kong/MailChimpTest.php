@@ -1,7 +1,7 @@
 <?php
 
-use \behance\Kong\Model;
-use \behance\Kong\Endpoints;
+use \Behance\Kong\Model;
+use \Behance\Kong\Endpoints;
 
 class MailChimpTest extends \PHPUnit_Framework_TestCase {
 

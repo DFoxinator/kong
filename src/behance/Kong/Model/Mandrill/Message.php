@@ -1,8 +1,8 @@
-<?php namespace behance\Kong\Model\Mandrill;
+<?php namespace Behance\Kong\Model\Mandrill;
 
-use \behance\Kong\Model;
-use \behance\Kong\Endpoints;
-use \behance\Kong\Exception\InvalidTypeException;
+use \Behance\Kong\Model;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\Exception\InvalidTypeException;
 use \Guzzle\Http\Message\Response;
 
 class Message extends Model {
@@ -61,6 +61,13 @@ class Message extends Model {
    * @var string
    */
   protected $_subject;
+
+  /**
+   * Specialized email headers.
+   *
+   * @var array key/value pairs
+   */
+  protected $_headers;
 
   /**
    * Send this message.
@@ -253,6 +260,17 @@ class Message extends Model {
     return $this->_merge_vars;
 
   } // getMergeVars
+
+  /**
+   * Set the email headers.
+   *
+   * @param array $headers
+   */
+  public function setHeaders( array $headers ) {
+
+    $this->_headers = $headers;
+
+  } // setHeaders
 
   public function setGlobalMergeVars( array $vars = [] ) {
 

@@ -1,8 +1,8 @@
 <?php
 
-use \behance\Kong\Api;
-use \behance\Kong\Endpoints;
-use \behance\Kong\MailChimp;
+use \Behance\Kong\Api;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\MailChimp;
 
 class ApiTest extends \PHPUnit_Framework_TestCase {
 

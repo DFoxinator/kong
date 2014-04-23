@@ -1,8 +1,8 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-use \behance\Kong\Api;
-use \behance\Kong\Exception\PropertyNotFoundException;
-use \behance\Kong\Exception\InvalidModelException;
+use \Behance\Kong\Api;
+use \Behance\Kong\Exception\PropertyNotFoundException;
+use \Behance\Kong\Exception\InvalidModelException;
 
 class Model {
 

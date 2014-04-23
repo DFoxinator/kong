@@ -1,6 +1,6 @@
 <?php
 
-use \behance\Kong\Mandrill;
+use \Behance\Kong\Mandrill;
 
 class MandrillTest extends \PHPUnit_Framework_TestCase {
 

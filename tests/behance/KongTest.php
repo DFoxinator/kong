@@ -1,6 +1,6 @@
 <?php
 
-use \behance\Kong;
+use \Behance\Kong;
 
 class KongTest extends \PHPUnit_Framework_TestCase {
 

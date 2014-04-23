@@ -1,8 +1,8 @@
-<?php namespace behance\Kong;
+<?php namespace Behance\Kong;
 
-use \behance\Kong\Api;
-use \behance\Kong\Endpoints;
-use \behance\Kong\Model;
+use \Behance\Kong\Api;
+use \Behance\Kong\Endpoints;
+use \Behance\Kong\Model;
 use \Guzzle\Http\Message\Response;
 
 class Client {
