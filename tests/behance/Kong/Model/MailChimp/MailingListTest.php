@@ -28,7 +28,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
         'double_optin' => false,
     ];
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
                 ->setMethods( [ 'execute' ] )
                 ->getMock();
 
@@ -63,7 +63,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
         'notify'        => false,
     ];
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
             ->setMethods( [ 'execute' ] )
             ->getMock();
 
@@ -91,7 +91,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
         'batch' => $users,
     ];
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
             ->setMethods( [ 'execute' ] )
             ->getMock();
 
@@ -113,7 +113,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
    * Test that an exception is thrown when given too many users.
    *
    * @test
-   * @expectedException \behance\Kong\Exception\MaximumExceededException
+   * @expectedException \Behance\Kong\Exception\MaximumExceededException
    */
   public function testBatchSubscribeException() {
 
@@ -142,7 +142,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
         'notify'        => false,
     ];
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
             ->setMethods( [ 'execute' ] )
             ->getMock();
 
@@ -164,7 +164,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
    * Test that an exception is thrown when given too many users.
    *
    * @test
-   * @expectedException \behance\Kong\Exception\MaximumExceededException
+   * @expectedException \Behance\Kong\Exception\MaximumExceededException
    */
   public function testBatchUnsubscribeException() {
 
@@ -178,7 +178,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
 
   protected function _getMockMailingList( array $list_methods = [], $api = null ) {
 
-    $list = $this->getMockBuilder( '\behance\Kong\Model\MailChimp\MailingList' );
+    $list = $this->getMockBuilder( '\Behance\Kong\Model\MailChimp\MailingList' );
 
     if ( !empty( $api ) ) {
       $list->setConstructorArgs( [ $api ] );

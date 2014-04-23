@@ -10,7 +10,7 @@ class Client {
   /**
    * API object for abstracting requests.
    *
-   * @var behance\Kong\Api
+   * @var Behance\Kong\Api
    */
   protected $_api;
 
@@ -26,7 +26,7 @@ class Client {
   /**
    * Get the API object.
    *
-   * @return \behance\Kong\Api
+   * @return \Behance\Kong\Api
    */
   public function getApi() {
 
@@ -41,7 +41,7 @@ class Client {
   /**
    * Set the API object.
    *
-   * @param \behance\Kong\Api $api
+   * @param \Behance\Kong\Api $api
    */
   public function setApi( Api $api ) {
 
@@ -93,7 +93,7 @@ class Client {
 
     $collection = [];
     $client = Model::getClientString( $model );
-    $model  = "\behance\Kong\Model\\$client\\$model";
+    $model  = "\Behance\Kong\Model\\$client\\$model";
 
     foreach ( $body['data'] as $item ) {
       $collection[] = new $model( $this->getApi(), $item );
@@ -114,7 +114,7 @@ class Client {
 
     $client = Model::getClientString( $name );
 
-    $model = "\behance\Kong\Model\\$client\\$name";
+    $model = "\Behance\Kong\Model\\$client\\$name";
 
     return new $model( $this->getApi() );
 

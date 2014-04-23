@@ -8,7 +8,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase {
 
     $key = uniqid();
 
-    $api = $this->getMockBuilder( '\behance\Kong\Api' )
+    $api = $this->getMockBuilder( '\Behance\Kong\Api' )
                 ->disableOriginalConstructor()
                 ->setMethods( [ 'setApiKey' ] )
                 ->getMock();
@@ -17,7 +17,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase {
         ->method( 'setApiKey' )
         ->with( $key );
 
-    $client = $this->getMockBuilder( '\behance\Kong\Client' )
+    $client = $this->getMockBuilder( '\Behance\Kong\Client' )
                    ->disableOriginalConstructor()
                    ->setMethods( [ 'getApi' ] )
                    ->getMock();

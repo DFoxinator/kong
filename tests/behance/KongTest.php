@@ -10,18 +10,18 @@ class KongTest extends \PHPUnit_Framework_TestCase {
 
     $mailchimp = $kong->getMailChimp();
 
-    $this->assertInstanceOf( '\behance\Kong\MailChimp', $mailchimp );
+    $this->assertInstanceOf( '\Behance\Kong\MailChimp', $mailchimp );
 
   } // testGetMailChimp
 
   public function testSetMailChimp() {
 
     $kong = new Kong;
-    $mailchimp = $this->getMock( '\behance\Kong\MailChimp' );
+    $mailchimp = $this->getMock( '\Behance\Kong\MailChimp' );
 
     $kong->setMailChimp( $mailchimp );
 
-    $this->assertInstanceOf( '\behance\Kong\MailChimp', $kong->getMailChimp() );
+    $this->assertInstanceOf( '\Behance\Kong\MailChimp', $kong->getMailChimp() );
 
   } // testSetMailChimp
 
@@ -31,18 +31,18 @@ class KongTest extends \PHPUnit_Framework_TestCase {
 
     $mandrill = $kong->getMandrill();
 
-    $this->assertInstanceOf( '\behance\Kong\Mandrill', $mandrill );
+    $this->assertInstanceOf( '\Behance\Kong\Mandrill', $mandrill );
 
   } // testGetMandrill
 
   public function testSetMandrill() {
 
     $kong = new Kong;
-    $mandrill = $this->getMock( '\behance\Kong\Mandrill' );
+    $mandrill = $this->getMock( '\Behance\Kong\Mandrill' );
 
     $kong->setMandrill( $mandrill );
 
-    $this->assertInstanceOf( '\behance\Kong\Mandrill', $kong->getMandrill() );
+    $this->assertInstanceOf( '\Behance\Kong\Mandrill', $kong->getMandrill() );
 
   } // testSetMandrill
 

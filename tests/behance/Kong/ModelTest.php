@@ -5,11 +5,11 @@ use \Behance\Kong\Model;
 class ModelTest extends \PHPUnit_Framework_TestCase {
 
   /**
-   * @expectedException \behance\Kong\Exception\PropertyNotFoundException
+   * @expectedException \Behance\Kong\Exception\PropertyNotFoundException
    */
   public function testGetBadProperty() {
 
-    $model = $this->getMockBuilder( '\behance\Kong\Model' )
+    $model = $this->getMockBuilder( '\Behance\Kong\Model' )
                   ->disableOriginalConstructor()
                   ->setMethods( [ 'setApi' ] )
                   ->getMock();
@@ -22,7 +22,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase {
 
   public function testToArray() {
 
-    $model = $this->getMockBuilder( '\behance\Kong\Model' )
+    $model = $this->getMockBuilder( '\Behance\Kong\Model' )
                   ->disableOriginalConstructor()
                   ->setMethods( [ 'setApi' ] )
                   ->getMock();
@@ -36,7 +36,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase {
   } // testToArray
 
   /**
-   * @expectedException \behance\Kong\Exception\InvalidModelException
+   * @expectedException \Behance\Kong\Exception\InvalidModelException
    */
   public function testGetClientStringFailure() {
 

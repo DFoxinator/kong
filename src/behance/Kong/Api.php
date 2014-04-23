@@ -136,7 +136,7 @@ class Api {
   /**
    * Construct and endpoint to hit on the API.
    *
-   * @param string $endpoint a constant from \behance\Kong\Endpoints
+   * @param string $endpoint a constant from \Behance\Kong\Endpoints
    *
    * @return string
    */

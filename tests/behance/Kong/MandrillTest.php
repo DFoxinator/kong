@@ -10,7 +10,7 @@ class MandrillTest extends \PHPUnit_Framework_TestCase {
 
     $message = $mandrill->message();
 
-    $this->assertInstanceOf( '\behance\Kong\Model\Mandrill\Message', $message );
+    $this->assertInstanceOf( '\Behance\Kong\Model\Mandrill\Message', $message );
 
   } // testMessage
 

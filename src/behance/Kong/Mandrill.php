@@ -2,7 +2,7 @@
 
 use \Behance\Kong\Endpoints;
 
-class Mandrill extends \behance\Kong\Client {
+class Mandrill extends \Behance\Kong\Client {
 
   const API_URI     = 'mandrillapp.com/api';
   const API_VERSION = '1.0';
@@ -10,7 +10,7 @@ class Mandrill extends \behance\Kong\Client {
   /**
    * Get an empty model instance.
    *
-   * @return \behance\Kong\Model\Mandrill\Messgae
+   * @return \Behance\Kong\Model\Mandrill\Messgae
    */
   public function message() {
 
