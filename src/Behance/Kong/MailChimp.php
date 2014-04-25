@@ -3,7 +3,7 @@
 class MailChimp extends \Behance\Kong\Client {
 
   const API_URI = 'api.mailchimp.com';
-  const API_VERSION = 'v2';
+  const API_VERSION = '2.0';
 
   /**
    * Retrieve a single list
