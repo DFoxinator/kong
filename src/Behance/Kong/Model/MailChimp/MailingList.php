@@ -28,7 +28,7 @@ class MailingList extends Model {
    * http://apidocs.mailchimp.com/api/2.0/lists/subscribe.php
    *
    * @param string $email
-   * @param array  $data Not yet implemented, will be an array containing merge vars
+   * @param array  $data  associative array of merge vars
    */
   public function subscribe( $email, array $data = [] ) {
 
@@ -36,6 +36,7 @@ class MailingList extends Model {
         'id'           => $this->__get( 'id' ),
         'email'        => [ 'email' => $email ],
         'double_optin' => false,
+        'merge_vars'   => $data,
     ];
 
     $this->_execute( $params, Endpoints::LIST_SUBSCRIBE, 'POST' );
