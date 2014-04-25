@@ -26,6 +26,7 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
         'id'           => $this->_list_id,
         'email'        => [ 'email' => $email ],
         'double_optin' => false,
+        'merge_vars'   => [],
     ];
 
     $api = $this->getMockBuilder( '\Behance\Kong\Api' )
