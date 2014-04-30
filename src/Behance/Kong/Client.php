@@ -107,16 +107,17 @@ class Client {
    * Get an empty instance of the supplied model.
    *
    * @param string $name
+   * @param array  $data optional array of data to set with the model.
    *
    * @return mixed
    */
-  protected function _getEmptyModel( $name ) {
+  protected function _getEmptyModel( $name, array $data = [] ) {
 
     $client = Model::getClientString( $name );
 
     $model = "\Behance\Kong\Model\\$client\\$name";
 
-    return new $model( $this->getApi() );
+    return new $model( $this->getApi(), $data );
 
   } // _getEmptyModel
 
