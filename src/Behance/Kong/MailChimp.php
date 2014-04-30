@@ -2,17 +2,22 @@
 
 class MailChimp extends \Behance\Kong\Client {
 
-  const API_URI = 'api.mailchimp.com';
+  const API_URI     = 'api.mailchimp.com';
   const API_VERSION = '2.0';
 
   /**
    * Retrieve a single list
    *
-   * @param string $id the list id
+   * @param string  $id      the list id
+   * @param boolean $hydrate whether to call to the API to get data, or just get an instance with an id set
    *
    * @return \Behance\Kong\Model\MailChimp\MailingList|boolean
    */
-  public function getList( $id ) {
+  public function getList( $id, $hydrate = true ) {
+
+    if ( $hydrate === false ) {
+      return $this->_getEmptyModel( Model::MAILCHIMP_LIST, [ 'id' => $id ] );
+    }
 
     $params = [
         'filters' => [

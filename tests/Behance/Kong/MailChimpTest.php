@@ -5,6 +5,35 @@ use \Behance\Kong\Endpoints;
 
 class MailChimpTest extends \PHPUnit_Framework_TestCase {
 
+
+  /**
+   * Test getting a list without hydrating with data
+   * from the API.
+   */
+  public function testGetListDry() {
+
+    $id = uniqid();
+
+    $kong = $this->getMockBuilder( 'Behance\Kong\MailChimp' )
+                 ->disableOriginalConstructor()
+                 ->setMethods( [ '_execute', '_formatResponse' ] )
+                 ->getMock();
+
+    $kong->expects( $this->never() )
+        ->method( '_execute' );
+
+    $kong->expects( $this->never() )
+         ->method( '_formatResponse' );
+
+    $list = $kong->getList( $id, false );
+
+    $this->assertEquals( $id, $list->id );
+
+  } // testGetListDry
+
+  /**
+   * Test retrieving a list and hydrating with data.
+   */
   public function testGetListSuccessful() {
 
     $response = $this->_getMockResponse( [ [], [], [] ], [] );
@@ -25,9 +54,11 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
 
     $kong->getList( uniqid() );
 
-
   } // testGetListSuccessful
 
+  /**
+   * Test a fail when attempting to get a list.
+   */
   public function testGetListFailure() {
 
     $response = $this->_getMockResponse( [ [], [], [] ], [] );
@@ -86,6 +117,9 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
 
   } // testGetListsSuccessful
 
+  /**
+   * Test a fail call to getLists.
+   */
   public function testGetListsFailure() {
 
     $response = $this->_getMockResponse( [], [] );
