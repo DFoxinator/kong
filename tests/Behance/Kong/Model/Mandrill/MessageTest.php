@@ -203,6 +203,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $message->setTemplate( $template_name );
     $message->setTemplateContent( $template_content );
     $message->addRecipient( $single_recipient['email'], $single_recipient['name'] );
+    $message->setHeaders( [ 'Reply-To' => uniqid() ] );
 
     $message->send();
 
