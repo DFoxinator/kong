@@ -172,10 +172,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
     $expected_params = [
         'message' => [
-            'subject'    => $subject,
-            'from_name'  => $from_name,
-            'from_email' => $from_email,
-            'to'         => array_values( $merged ),
+            'subject'                   => $subject,
+            'from_name'                 => $from_name,
+            'from_email'                => $from_email,
+            'to'                        => array_values( $merged ),
+            'tags'                      => [],
+            'google_analytics_domains'  => [],
+            'google_analytics_campaign' => null,
         ],
         'template_name' => $template_name,
         'template_content' => $template_content,
@@ -247,15 +250,22 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
         [ 'name' => 'hello', 'content' => 'world' ],
     ];
 
+    $tags = [ uniqid() ];
+    $domains = [ uniqid() ];
+    $campaign = uniqid();
+
     $expected_params = [
         'message' => [
-            'subject'    => $subject,
-            'from_name'  => $from_name,
-            'from_email' => $from_email,
-            'to'         => array_values( $merged ),
-            'merge'      => true,
-            'merge_vars' => [ $expected_vars ],
+            'subject'           => $subject,
+            'from_name'         => $from_name,
+            'from_email'        => $from_email,
+            'to'                => array_values( $merged ),
+            'merge'             => true,
+            'merge_vars'        => [ $expected_vars ],
             'global_merge_vars' => $expected_global_vars,
+            'tags'              => $tags,
+            'google_analytics_domains'  => $domains,
+            'google_analytics_campaign' => $campaign,
         ],
     ];
 
@@ -279,6 +289,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $message->setRecipients( $multiple_recipients );
     $message->addRecipient( $single_recipient['email'], $single_recipient['name'], $vars );
     $message->setGlobalMergeVars( $vars );
+    $message->setTags( $tags );
+    $message->setAnalyticsCampaign( $campaign );
+    $message->setAnalyticsDomains( $domains );
 
     $message->send();
 

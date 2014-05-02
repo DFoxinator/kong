@@ -67,7 +67,30 @@ class Message extends Model {
    *
    * @var array key/value pairs
    */
-  protected $_headers;
+  protected $_headers = [];
+
+  /**
+   * Google analytics domains to attach
+   * query strings to.
+   *
+   * @var array an array of strings
+   */
+  protected $_analytics_domains = [];
+
+  /**
+   * Google analytics campaign to use with query strings.
+   * Required with analytics domains.
+   *
+   * @var string
+   */
+  protected $_analytics_campaign;
+
+  /**
+   * Tags used for statistics on Mandrill.
+   *
+   * @var array an array of strings
+   */
+  protected $_tags = [];
 
   /**
    * Send this message.
@@ -76,10 +99,13 @@ class Message extends Model {
 
     $params = [
         'message' => [
-            'subject'    => $this->_subject,
-            'from_name'  => $this->_from_name,
-            'from_email' => $this->_from_email,
-            'to'         => $this->_recipients
+            'subject'                   => $this->_subject,
+            'from_name'                 => $this->_from_name,
+            'from_email'                => $this->_from_email,
+            'to'                        => $this->getRecipients(),
+            'tags'                      => $this->getTags(),
+            'google_analytics_domains'  => $this->getAnalyticsDomains(),
+            'google_analytics_campaign' => $this->getAnalyticsCampaign(),
         ],
     ];
 
@@ -188,6 +214,44 @@ class Message extends Model {
   } // addRecipient
 
   /**
+   * @return string
+   */
+  public function getAnalyticsCampaign() {
+
+    return $this->_analytics_campaign;
+
+  } // getAnalyticsCampaign
+
+  /**
+   * @param string $campaign
+   */
+  public function setAnalyticsCampaign( $campaign ) {
+
+    $this->_analytics_campaign = $campaign;
+
+  } // setAnalyticsCampaign
+
+  /**
+   * @return array
+   */
+  public function getAnalyticsDomains() {
+
+    return $this->_analytics_domains;
+
+  } // getAnalyticsDomains
+
+  /**
+   * Set the google analytics domains.
+   *
+   * @param array $domains
+   */
+  public function setAnalyticsDomains( array $domains ) {
+
+    $this->_analytics_domains = $domains;
+
+  } // setAnalyticsDomains
+
+  /**
    * Add a set of merge vars for a specific user.
    *
    * @param string  $email
@@ -277,6 +341,26 @@ class Message extends Model {
     $this->_global_merge_vars = $this->_formatMergeVars( $this->_flatten( $vars ) );
 
   } // setGlobalMergeVars
+
+  /**
+   * @return array
+   */
+  public function getTags() {
+
+    return $this->_tags;
+
+  } // getTags
+
+  /**
+   * Set the analytics tags.
+   *
+   * @param array $tags
+   */
+  public function setTags( $tags ) {
+
+    $this->_tags = $tags;
+
+  } // setTags
 
   /**
    * Send a transactional email using a hosted template.
