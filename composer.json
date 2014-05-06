@@ -1,6 +1,6 @@
 {
   "name": "behance/kong",
-  "description": "PHP 5.4+ PSR-1 compliant wrapper for the MailChimp API.",
+  "description": "The MailChimp and Mandrill wrapper to rule them all.",
   "keywords": ["mailchimp", "email"],
   "license": "MIT",
   "authors": [
