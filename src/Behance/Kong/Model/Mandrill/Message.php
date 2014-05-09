@@ -93,6 +93,13 @@ class Message extends Model {
   protected $_tags = [];
 
   /**
+   * Whether to enable background sending on Mandrill's side.
+   *
+   * @var boolean
+   */
+  protected $_async = false;
+
+  /**
    * Send this message.
    */
   public function send() {
@@ -107,6 +114,7 @@ class Message extends Model {
             'google_analytics_domains'  => $this->getAnalyticsDomains(),
             'google_analytics_campaign' => $this->getAnalyticsCampaign(),
         ],
+        'async' => $this->getAsync(),
     ];
 
     if ( !empty( $this->_merge_vars ) ) {
@@ -361,6 +369,24 @@ class Message extends Model {
     $this->_tags = $tags;
 
   } // setTags
+
+  /**
+   * @return boolean
+   */
+  public function getAsync() {
+
+    return $this->_async;
+
+  } // getAsync
+
+  /**
+   * @param boolean $async
+   */
+  public function setAsync( $async ) {
+
+    $this->_async = $async;
+
+  } // setAsync
 
   /**
    * Send a transactional email using a hosted template.

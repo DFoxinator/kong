@@ -180,8 +180,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
             'google_analytics_domains'  => [],
             'google_analytics_campaign' => null,
         ],
-        'template_name' => $template_name,
+        'template_name'    => $template_name,
         'template_content' => $template_content,
+        'async'            => true,
     ];
 
     $response = $this->_getMockResponse();
@@ -207,6 +208,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $message->setTemplateContent( $template_content );
     $message->addRecipient( $single_recipient['email'], $single_recipient['name'] );
     $message->setHeaders( [ 'Reply-To' => uniqid() ] );
+    $message->setAsync( true );
 
     $message->send();
 
@@ -267,6 +269,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
             'google_analytics_domains'  => $domains,
             'google_analytics_campaign' => $campaign,
         ],
+        'async' => false,
     ];
 
     $response = $this->_getMockResponse();
