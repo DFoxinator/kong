@@ -5,6 +5,43 @@ use \Behance\Kong\Endpoints;
 
 class MessageTest extends \PHPUnit_Framework_TestCase {
 
+  public function testSendHtml() {
+
+    $html = '<h1>Hello world.</h1>';
+
+    $expected_params = [
+        'message' => [
+            'subject'                   => null,
+            'from_name'                 => null,
+            'from_email'                => null,
+            'to'                        => [],
+            'tags'                      => [],
+            'google_analytics_domains'  => [],
+            'google_analytics_campaign' => null,
+            'html'                      => $html,
+        ],
+        'async' => false,
+    ];
+
+    $response = $this->getMockBuilder( '\Guzzle\Http\Message\Response' )
+                     ->disableOriginalConstructor()
+                     ->getMock();
+
+    $message = $this->getMockBuilder( '\Behance\Kong\Model\Mandrill\Message' )
+                    ->disableOriginalConstructor()
+                    ->setMethods( [ '_execute', '_formatResponse' ] )
+                    ->getMock();
+
+    $message->expects( $this->once() )
+            ->method( '_execute' )
+            ->will( $this->returnValue( $response ) );
+
+    $message->setHtml( $html );
+
+    $message->send();
+
+  } // testSendHtml
+
   public function testAddMergeVarsValidateFailure() {
 
     $email = uniqid();

@@ -130,11 +130,38 @@ class Message extends Model {
       return $this->_sendTemplate( $params );
     }
 
+    if ( !empty( $this->_html ) ) {
+      $params['message']['html'] = $this->_html;
+    }
+
     $response = $this->_execute( $params, Endpoints::MANDRILL_SEND, 'POST' );
 
     return $this->_formatResponse( $response );
 
   } // send
+
+  /**
+   * Set the HTML content of the email. Only used when a template
+   * is not specified.
+   *
+   * @param string $html
+   */
+  public function setHtml( $html ) {
+
+    $this->_html = $html;
+
+  } // setHtml
+
+  /**
+   * Get the HTML content of the email if no template is being used.
+   *
+   * @return string
+   */
+  public function getHtml( $html ) {
+
+    return $this->_html;
+
+  } // getHtml
 
   /**
    * Specify the name (slug) of the template to use.
