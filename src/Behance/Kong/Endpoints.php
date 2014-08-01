@@ -10,6 +10,7 @@ class Endpoints {
   const LIST_UNSUBSCRIBE       = 'lists/unsubscribe.json';
   const LIST_BATCH_SUBSCRIBE   = 'lists/batch-subscribe.json';
   const LIST_BATCH_UNSUBSCRIBE = 'lists/batch-unsubscribe.json';
+  const LIST_UPDATE_SUBSCRIBER = 'lists/update-member.json';
 
   /**
    * Mandrill API Endpoints
