@@ -122,4 +122,24 @@ class MailingList extends Model {
 
   } // batchUnsubscribe
 
+  /**
+   * Update a user's merge variables.
+   *
+   * http://apidocs.mailchimp.com/api/2.0/lists/update-member.php
+   *
+   * @param string $email
+   * @param array  $merge_vars
+   */
+  public function updateSubscriber( $email, array $merge_vars = [] ) {
+
+    $params = [
+        'id'         => $this->__get( 'id' ),
+        'email'      => [ 'email' => $email ],
+        'merge_vars' => $merge_vars,
+    ];
+
+    $this->_execute( $params, Endpoints::LIST_UPDATE_SUBSCRIBER, 'POST' );
+
+  } // updateSubscriber
+
 } // MailingList

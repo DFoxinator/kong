@@ -177,6 +177,30 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
 
   } // testBatchUnsubscribeException
 
+  /**
+   * Test updating a subscriber's merge variables
+   */
+  public function testUpdateSubscriber() {
+
+    $list = $this->_getMockMailingList( [ '_execute' ] );
+
+    $email = 'hello@mailinator.com';
+    $merge_vars = [ 'hello' => 'world' ];
+
+    $params = [
+        'id' => $list->id,
+        'email' => [ 'email' => $email ],
+        'merge_vars' => $merge_vars,
+    ];
+
+    $list->expects( $this->once() )
+         ->method( '_execute' )
+         ->with( $params, Endpoints::LIST_UPDATE_SUBSCRIBER, 'POST' );
+
+    $list->updateSubscriber( $email, $merge_vars );
+
+  } // testUpdateSubscriber
+
   protected function _getMockMailingList( array $list_methods = [], $api = null ) {
 
     $list = $this->getMockBuilder( '\Behance\Kong\Model\MailChimp\MailingList' );
