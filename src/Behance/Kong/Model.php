@@ -1,8 +1,8 @@
 <?php namespace Behance\Kong;
 
-use \Behance\Kong\Api;
-use \Behance\Kong\Exception\PropertyNotFoundException;
-use \Behance\Kong\Exception\InvalidModelException;
+use Behance\Kong\Api;
+use Behance\Kong\Exception\PropertyNotFoundException;
+use Behance\Kong\Exception\InvalidModelException;
 
 class Model {
 
@@ -11,14 +11,15 @@ class Model {
    *
    * @var string
    */
-  const MAILCHIMP_LIST = 'MailingList';
+  const MAILCHIMP_LIST = '\Behance\Kong\Model\MailChimp\MailingList';
+  const MAILCHIMP_LIST_MEMBER = '\Behance\Kong\Model\MailChimp\MailingList\Member';
 
   /**
    * Mandrill model names.
    *
    * @var string
    */
-  const MANDRILL_MESSAGE = 'Message';
+  const MANDRILL_MESSAGE = '\Behance\Kong\Model\Mandrill\Message';
 
   /**
    * MailChimp models
@@ -27,6 +28,7 @@ class Model {
    */
   protected static $_MAILCHIMP_MODELS = [
       self::MAILCHIMP_LIST,
+      self::MAILCHIMP_LIST_MEMBER,
   ];
 
   /**
@@ -47,6 +49,11 @@ class Model {
   protected $_client_string;
 
   /**
+   * @var \Behance\Kong\Client
+   */
+  protected $_client;
+
+  /**
    * The data for the model.
    *
    * @var array
@@ -61,12 +68,13 @@ class Model {
   protected $_api;
 
   /**
-   * @param \Behance\Kong\Api $api
+   * @param \Behance\Kong\Client $client
    * @param array $data data to hydrate the model with
    */
-  public function __construct( Api $api, array $data = [] ) {
+  public function __construct( Client $client, array $data = [] ) {
 
-    $this->setApi( $api );
+    $this->setClient( $client );
+    $this->setApi( $client->getApi() ); // TODO: This is only for backwards compatibility. Remove in future.
     $this->setData( $data );
 
   } // __construct
@@ -98,6 +106,24 @@ class Model {
     return $this->_data;
 
   } // toArray
+
+  /**
+   * @return \Behance\Kong\Client
+   */
+  public function getClient() {
+
+    return $this->_client;
+
+  } // getClient
+
+  /**
+   * @param \Behance\Kong\Client $client
+   */
+  public function setClient( Client $client ) {
+
+    $this->_client = $client;
+
+  } // setClient
 
   /**
    * Determines if $model is a MailChimp model or Mandrill model and

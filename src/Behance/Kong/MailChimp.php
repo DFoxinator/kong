@@ -26,7 +26,7 @@ class MailChimp extends \Behance\Kong\Client {
     ];
 
     $response = $this->_execute( $params, Endpoints::LISTS );
-    $array    = $this->_formatResponse( $response, Model::MAILCHIMP_LIST );
+    $array    = $this->formatResponse( $response, Model::MAILCHIMP_LIST );
 
     if ( !empty( $array[0] ) ) {
       return $array[0];
@@ -47,7 +47,7 @@ class MailChimp extends \Behance\Kong\Client {
 
     $response = $this->_execute( $params, Endpoints::LISTS );
 
-    return $this->_formatResponse( $response, Model::MAILCHIMP_LIST );
+    return $this->formatResponse( $response, Model::MAILCHIMP_LIST );
 
   } // getLists
 

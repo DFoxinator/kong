@@ -66,7 +66,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
 
     $kong = $this->getMockBuilder( 'Behance\Kong\MailChimp' )
                  ->disableOriginalConstructor()
-                 ->setMethods( [ 'getApi', '_formatResponse' ] )
+                 ->setMethods( [ 'getApi', 'formatResponse' ] )
                  ->getMock();
 
     $api->expects( $this->once() )
@@ -78,7 +78,7 @@ class MailChimpTest extends \PHPUnit_Framework_TestCase {
          ->will( $this->returnValue( $api ) );
 
     $kong->expects( $this->once() )
-         ->method( '_formatResponse' )
+         ->method( 'formatResponse' )
          ->with( $this->equalTo( $response ), $this->equalTo( Model::MAILCHIMP_LIST ) )
          ->will( $this->returnValue( [] ) );
 
