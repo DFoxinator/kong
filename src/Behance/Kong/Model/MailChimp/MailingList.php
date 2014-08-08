@@ -1,8 +1,9 @@
 <?php namespace Behance\Kong\Model\MailChimp;
 
-use \Behance\Kong\Model;
-use \Behance\Kong\Endpoints;
-use \Behance\Kong\Exception\MaximumExceededException;
+use Behance\Kong\Model;
+use Behance\Kong\Endpoints;
+use Behance\Kong\Exception\MaximumExceededException;
+use Behance\Kong\Model\MailChimp\MailingList\Member;
 
 class MailingList extends Model {
 
@@ -15,11 +16,45 @@ class MailingList extends Model {
   const MAX_BATCH_USERS = 10000;
 
   /**
+   * The maximum amount of list members to get in a single
+   * request.
+   */
+  const MAX_LIST_MEMBERS = 100;
+
+  /**
    * Client string.
    *
    * @var string
    */
   protected $_client_string = 'MailChimp';
+
+  /**
+   * Get a list of members for this list.
+   *
+   * http://apidocs.mailchimp.com/api/2.0/lists/members.php
+   *
+   * @param integer $start_page
+   * @param integer $limit
+   *
+   * @return array an array of \Behance\Kong\MailChimp\Model\MailingList\Member (or empty if no results)
+   */
+  public function getMembers( $start_page = 0, $limit = 25 ) {
+
+    $params = [
+        'id'    => $this->__get( 'id' ),
+        'start' => $start_page,
+        'limit' => $limit,
+    ];
+
+    $response = $this->_execute( $params, Endpoints::LIST_MEMBERS, 'GET' );
+
+    if ( !$response->isSuccessful() ) {
+      return [];
+    } // if unsuccessful response
+
+    return $this->getClient()->formatResponse( $response, Model::MAILCHIMP_LIST_MEMBER );
+
+  } // getMembers
 
   /**
    * Subscribe a user with the provided profile
