@@ -52,7 +52,7 @@ class MailingList extends Model {
 
     if ( !$response->isSuccessful() ) {
       return [];
-    } // if unsuccessful response
+    }
 
     return $this->getClient()->formatResponse( $response, Model::MAILCHIMP_LIST_MEMBER );
 
