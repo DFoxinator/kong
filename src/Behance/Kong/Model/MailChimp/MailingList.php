@@ -42,15 +42,17 @@ class MailingList extends Model {
 
     $params = [
         'id'    => $this->__get( 'id' ),
-        'start' => $start_page,
-        'limit' => $limit,
+        'opts' => [
+            'start' => $start_page,
+            'limit' => $limit,
+        ],
     ];
 
     $response = $this->_execute( $params, Endpoints::LIST_MEMBERS, 'GET' );
 
     if ( !$response->isSuccessful() ) {
       return [];
-    } // if unsuccessful response
+    }
 
     return $this->getClient()->formatResponse( $response, Model::MAILCHIMP_LIST_MEMBER );
 
