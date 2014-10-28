@@ -34,6 +34,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
     $message->expects( $this->once() )
             ->method( '_execute' )
+            ->with( $expected_params, Endpoints::MANDRILL_SEND, 'POST' )
             ->will( $this->returnValue( $response ) );
 
     $message->setHtml( $html );
@@ -187,6 +188,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
     $type                = 'to';
     $method              = 'POST';
+    $send_at             = '2014-10-31 00:00:00';
     $subject             = uniqid();
     $from_name           = uniqid();
     $from_email          = uniqid();
@@ -196,7 +198,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
     foreach ( range( 0, 3 ) as $to ) {
 
-      $multiple_recipients[] = [
+      $multiple_recipients[ $to ] = [
           'email' => uniqid(),
           'name'  => uniqid(),
           'type'  => $type,
@@ -246,6 +248,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
     $message->addRecipient( $single_recipient['email'], $single_recipient['name'] );
     $message->setHeaders( [ 'Reply-To' => uniqid() ] );
     $message->setAsync( true );
+    $message->setSendTime( $send_at );
 
     $message->send();
 
@@ -264,7 +267,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
     foreach ( range( 0, 3 ) as $to ) {
 
-      $multiple_recipients[] = [
+      $multiple_recipients[ $to ] = [
           'email' => uniqid(),
           'name'  => uniqid(),
           'type'  => $type,
@@ -337,7 +340,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 
   } // testSendWithoutTemplate
 
-  protected function _getMockResponse( $data = [], $errors = [] ) {
+  /**
+   * @return Mock Guzzle\Http\Message\Response
+   */
+  protected function _getMockResponse() {
 
     $response = $this->getMockBuilder( 'Guzzle\Http\Message\Response' )
                      ->disableOriginalConstructor()

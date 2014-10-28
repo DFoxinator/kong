@@ -5,6 +5,11 @@ use \Behance\Kong\Endpoints;
 use \Behance\Kong\Exception\InvalidTypeException;
 use \Guzzle\Http\Message\Response;
 
+/**
+ * Documentation for most functionality in this class can be found at:
+ *
+ * https://mandrillapp.com/api/docs/messages.html
+ */
 class Message extends Model {
 
   /**
@@ -100,6 +105,15 @@ class Message extends Model {
   protected $_async = false;
 
   /**
+   * A string in the format of YYYY-MM-DD HH:MM:SS
+   * to send the message at. If this is null, the email
+   * will send instantly.
+   *
+   * @var string
+   */
+  protected $_send_at;
+
+  /**
    * Send this message.
    */
   public function send() {
@@ -134,6 +148,10 @@ class Message extends Model {
       $params['message']['html'] = $this->_html;
     }
 
+    if ( !empty( $this->_send_at ) ) {
+      $params['send_at'] = $this->_send_at;
+    }
+
     $response = $this->_execute( $params, Endpoints::MANDRILL_SEND, 'POST' );
 
     return $this->_formatResponse( $response );
@@ -157,7 +175,7 @@ class Message extends Model {
    *
    * @return string
    */
-  public function getHtml( $html ) {
+  public function getHtml() {
 
     return $this->_html;
 
@@ -414,6 +432,26 @@ class Message extends Model {
     $this->_async = $async;
 
   } // setAsync
+
+  /**
+   * @return string
+   */
+  public function getSendTime() {
+
+    return $this->_send_at;
+
+  } // getSendTime
+
+  /**
+   * A datetime string in the format of YYYY-MM-DD HH:MM:SS
+   *
+   * @param string $datetime
+   */
+  public function setSendTime( $datetime ) {
+
+    $this->_send_at = $datetime;
+
+  } // setSendTime
 
   /**
    * Send a transactional email using a hosted template.
