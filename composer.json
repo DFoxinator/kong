@@ -18,8 +18,8 @@
     "phpdocumentor/phpdocumentor": "2.*"
   },
   "autoload": {
-    "psr-0": {
-      "Behance": "src/"
+    "psr-4": {
+      "Behance\\": "src/"
     }
   }
 }
