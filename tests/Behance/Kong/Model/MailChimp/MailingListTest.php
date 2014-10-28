@@ -72,7 +72,13 @@ class MailingListTest extends \PHPUnit_Framework_TestCase {
         ->method( 'execute' )
         ->with( $expected_params, Endpoints::LIST_UNSUBSCRIBE, MailChimp::API_URI, MailChimp::API_VERSION, 'POST' );
 
-    $list = new MailingList( $api, [ 'id' => $this->_list_id ] );
+    $client = $this->getMock( '\Behance\Kong\MailChimp', [ 'getApi' ] );
+
+    $client->expects( $this->any() )
+           ->method( 'getApi' )
+           ->will( $this->returnValue( $api ) );
+
+    $list = new MailingList( $client, [ 'id' => $this->_list_id ] );
 
     $list->unsubscribe( $email );
 

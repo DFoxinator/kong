@@ -5,7 +5,7 @@ use \Behance\Kong\Endpoints;
 use \Behance\Kong\Model;
 use \Guzzle\Http\Message\Response;
 
-class Client {
+abstract class Client {
 
   /**
    * API object for abstracting requests.
@@ -65,6 +65,28 @@ class Client {
   } // setApiKey
 
   /**
+   * Format the raw API response into an array of Models.
+   *
+   * @param Guzzle\Http\Message\Response $response api response
+   * @param string $model the name of the class to instantiate
+   *
+   * @return array
+   */
+  public function formatResponse( Response $response, $model ) {
+
+    $body = $response->json();
+
+    $collection = [];
+
+    foreach ( $body['data'] as $item ) {
+      $collection[] = new $model( $this, $item );
+    } // foreach body[data]
+
+    return $collection;
+
+  } // formatResponse
+
+  /**
    * Execute an api call.
    *
    * @param array $params
@@ -80,44 +102,16 @@ class Client {
   } // _execute
 
   /**
-   * Format the raw API response into an array of Models.
-   *
-   * @param Guzzle\Http\Message\Response $response api response
-   * @param string $model the name of the class to instantiate
-   *
-   * @return array
-   */
-  protected function _formatResponse( Response $response, $model ) {
-
-    $body = $response->json();
-
-    $collection = [];
-    $client = Model::getClientString( $model );
-    $model  = "\Behance\Kong\Model\\$client\\$model";
-
-    foreach ( $body['data'] as $item ) {
-      $collection[] = new $model( $this->getApi(), $item );
-    } // foreach body[data]
-
-    return $collection;
-
-  } // _formatResponse
-
-  /**
    * Get an empty instance of the supplied model.
    *
-   * @param string $name
+   * @param string $model
    * @param array  $data optional array of data to set with the model.
    *
    * @return mixed
    */
-  protected function _getEmptyModel( $name, array $data = [] ) {
+  protected function _getEmptyModel( $model, array $data = [] ) {
 
-    $client = Model::getClientString( $name );
-
-    $model = "\Behance\Kong\Model\\$client\\$name";
-
-    return new $model( $this->getApi(), $data );
+    return new $model( $this, $data );
 
   } // _getEmptyModel
 
