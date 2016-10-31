@@ -34,8 +34,9 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
 
     $expected_full_endpoint = "https://{$data_center}.{$uri}/{$version}/{$endpoint}";
     $expected_options = [
-        'query' => array_merge( $params, [ 'key' => null ] ),
-        'exceptions' => false,
+        'query'           => array_merge( $params, [ 'key' => null ] ),
+        'timeout'         => Api::TIMEOUT,
+        'connect_timeout' => Api::CONNECT_TIMEOUT,
     ];
 
     $request = $this->getMockBuilder( '\Guzzle\Http\Message\Request' )
@@ -81,8 +82,9 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
     $expected_body = array_merge( $params, [ 'key' => null ] );
     $expected_full_endpoint = "https://{$data_center}.{$uri}/{$version}/{$endpoint}";
     $expected_options = [
-        'body' => $expected_body,
-        'exceptions' => false,
+        'body'            => $expected_body,
+        'timeout'         => Api::TIMEOUT,
+        'connect_timeout' => Api::CONNECT_TIMEOUT,
     ];
 
     $request = $this->getMockBuilder( '\Guzzle\Http\Message\Request' )

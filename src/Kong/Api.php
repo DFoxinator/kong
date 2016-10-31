@@ -5,6 +5,9 @@ use \Guzzle\Http\Client as HttpClient;
 
 class Api {
 
+  const TIMEOUT         = 20;
+  const CONNECT_TIMEOUT = 5;
+
   /**
    * HTTP object for cURL requests.
    *
@@ -43,7 +46,7 @@ class Api {
    */
   public function execute( array $params, $endpoint, $uri, $version, $method = 'GET' ) {
 
-    $options  = [ 'exceptions' => false ];
+    $options  = [ 'timeout' => self::TIMEOUT, 'connect_timeout' => self::CONNECT_TIMEOUT ];
     $body     = null;
     $headers  = null;
     $endpoint = $this->_constructEndpoint( $endpoint, $uri, $version );
